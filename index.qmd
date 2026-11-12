@@ -1,0 +1,75 @@
+
+---
+title: "A Demonstration of Correlation Analysis in Python & Quarto using Planets"
+execute:
+  echo: true
+---
+
+# Introduction
+
+```{python}
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.set_context('talk')
+
+df = sns.load_dataset('planets')
+df = df[['orbital_period', 'mass']].dropna()
+df.shape[0]
+
+```
+
+Does a planet's orbital period correlate with its mass?
+
+The students of the UW-Madison DSHB program are interested in learning about correlations between planetary orbital periods and planetary masses. This project uses the Seaborn planets dataset to demonstrate correlation analysis in Python and Quarto. After removing observations with missing values in either variable, we have `{python} f"{df.shape[0]}"` planets available for analysis.
+
+# Lit Review
+
+
+
+# Methods
+
+We have two continuous numerical variables: orbital period, measured in days, and planetary mass, measured in Jupiter masses. We will evaluate their linear association using Pearson correlation and a scatterplot. Because these variables can be highly skewed, the results should be interpreted cautiously.
+
+
+# Results
+
+```{python}
+corr_val = df['orbital_period'].corr(df['mass'])
+
+if corr_val > 0.8:
+    narrative = "a very strong positive correlation"
+elif corr_val > 0.4:
+    narrative = "a moderate positive correlation"
+elif corr_val > 0:
+    narrative = "a positive but weak correlation"
+elif corr_val > -0.4:
+    narrative = "a moderate negative correlation"
+elif corr_val > -0.8:
+    narrative = "a moderate negative correlation"
+else:
+    narrative = "a very strong negative correlation"
+
+```
+
+Using the simple Pearson correlation approach, these data produce a correlation coefficient of `{python} f"{corr_val:.5f}"`. We conclude the relationship is `{python} f"{narrative}"`.
+
+```{python}
+#| label: fig-orbital-mass-scatter
+#| fig-cap: "A scatterplot of planetary orbital period and mass"
+
+fig, ax = plt.subplots(figsize=(6, 3.5))
+
+sns.scatterplot(data=df, x='orbital_period', y='mass', ax=ax)
+
+ax.set_xlabel('Orbital Period (days)')
+ax.set_ylabel('Planetary Mass (Jupiter masses)')
+
+plt.tight_layout()
+plt.show()
+
+```
+
+# Discussion
