@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "A Demonstration of Correlation Analysis in Python & Quarto using Planets",
+    "section": "",
+    "text": "Introduction\n\nimport pandas as pd\nimport numpy as np\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\nsns.set_context('talk')\n\ndf = sns.load_dataset('planets')\ndf = df[['orbital_period', 'mass']].dropna()\ndf.shape[0]\n\n513\n\n\nDoes a planet’s orbital period correlate with its mass?\nThe students of the UW-Madison DSHB program are interested in learning about correlations between planetary orbital periods and planetary masses. This project uses the Seaborn planets dataset to demonstrate correlation analysis in Python and Quarto. After removing observations with missing values in either variable, we have 513 planets available for analysis.\n\n\nLit Review\n\n\nMethods\nWe have two continuous numerical variables: orbital period, measured in days, and planetary mass, measured in Jupiter masses. We will evaluate their linear association using Pearson correlation and a scatterplot. Because these variables can be highly skewed, the results should be interpreted cautiously.\n\n\nResults\n\ncorr_val = df['orbital_period'].corr(df['mass'])\n\nif corr_val &gt; 0.8:\n    narrative = \"a very strong positive correlation\"\nelif corr_val &gt; 0.4:\n    narrative = \"a moderate positive correlation\"\nelif corr_val &gt; 0:\n    narrative = \"a positive but weak correlation\"\nelif corr_val &gt; -0.4:\n    narrative = \"a moderate negative correlation\"\nelif corr_val &gt; -0.8:\n    narrative = \"a moderate negative correlation\"\nelse:\n    narrative = \"a very strong negative correlation\"\n\nUsing the simple Pearson correlation approach, these data produce a correlation coefficient of 0.17373. We conclude the relationship is a positive but weak correlation.\n\nfig, ax = plt.subplots(figsize=(6, 3.5))\n\nsns.scatterplot(data=df, x='orbital_period', y='mass', ax=ax)\n\nax.set_xlabel('Orbital Period (days)')\nax.set_ylabel('Planetary Mass (Jupiter masses)')\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 1: A scatterplot of planetary orbital period and mass\n\n\n\n\n\n\n\nDiscussion"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  }
+]
